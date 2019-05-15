@@ -1,0 +1,3 @@
+LIBRARY	msys
+EXPORTS
+	GetDllObject	@1
