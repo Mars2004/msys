@@ -1,14 +1,14 @@
 /**************************************************************************************************//**
-* @addtogroup	MSYS
+* @addtogroup	MSVEXAMPLE
 * @{
 ******************************************************************************************************/
 
 /**************************************************************************************************//**
 * @file
-* @brief			MarsTech Logging Implementation
-* @details		Contains implementation @ref MsvLogging of @ref IMsvLogging interface.
+* @brief			MarsTech Example Module Implementation
+* @details		Contains implementation @ref MsvExampleModule of @ref IMsvDllModule interface.
 * @author		Martin Svoboda
-* @date			05.05.2019
+* @date			19.05.2019
 * @copyright	GNU General Public License (GPLv3).
 ******************************************************************************************************/
 
@@ -31,72 +31,92 @@ along with Foobar. If not, see <https://www.gnu.org/licenses/>.
 */
 
 
-#ifndef MARSTECH_LOGGING_SYS_H
-#define MARSTECH_LOGGING_SYS_H
+#ifndef MARSTECH_EXAMPLEMODULE_H
+#define MARSTECH_EXAMPLEMODULE_H
 
 
-#include "IMsvLogging.h"
+#include "mmodule/MsvDllModuleBase.h"
+
+#include "mlogging/mlogging.h"
 
 
 /**************************************************************************************************//**
-* @brief		MarsTech Logging Implementation.
-* @details	Implementation of logging interface for easy access to logging interfaces and its implementations.
-* @see		IMsvLogging
+* @brief		MarsTech Example Module.
+* @details	Example module.
+* @note		This example module will be used as static and dynamic module.
 ******************************************************************************************************/
-class MsvLogging:
-	public IMsvLogging
+class MsvExampleModule:
+	public MsvDllModuleBase
 {
 public:
 	/**************************************************************************************************//**
-	* @brief		Constructor.
+	* @brief			Constructor.
+	* @param[in]	moduleName			Example module name.
+	* @param[in]	moduleLoggerName	Name of logger used for logging.
+	* @param[in]	spDllFactory		Shared pointer to DLL factory.
+	* @note			Parameter spDllFactory will be used for static versions of this module.
 	******************************************************************************************************/
-	MsvLogging();
+	MsvExampleModule(const char* moduleName = "MsvDllModule", const char* moduleLoggerName = "MsvDllModule", std::shared_ptr<IMsvDllFactory> spDllFactory = nullptr);
 
 	/**************************************************************************************************//**
 	* @brief		Virtual destructor.
 	******************************************************************************************************/
-	virtual ~MsvLogging();
+	virtual ~MsvExampleModule();
+
+	/*-----------------------------------------------------------------------------------------------------
+	**											IMsvModule public methods
+	**---------------------------------------------------------------------------------------------------*/
+public:
+	/**************************************************************************************************//**
+	* @copydoc IMsvModule::Initialize()
+	******************************************************************************************************/
+	virtual MsvErrorCode Initialize() override;
 
 	/**************************************************************************************************//**
-	* @copydoc IMsvLogging::GetLogger(std::shared_ptr<MsvLogger>& spLogger, const char* loggerName) const
+	* @copydoc IMsvModule::Uninitialize()
 	******************************************************************************************************/
-	virtual MsvErrorCode GetLogger(std::shared_ptr<MsvLogger>& spLogger, const char* loggerName = "MsvLogger") const override;
+	virtual MsvErrorCode Uninitialize() override;
 
 	/**************************************************************************************************//**
-	* @copydoc IMsvLogging::GetLogger(std::shared_ptr<MsvLogger>& spLogger, const char* loggerName, const char* logFile, int maxLogFileSize, int maxLogFiles) const
+	* @copydoc IMsvModule::Start()
 	******************************************************************************************************/
-	virtual MsvErrorCode GetLogger(std::shared_ptr<MsvLogger>& spLogger, const char* loggerName, const char* logFile, int maxLogFileSize, int maxLogFiles) const override;
+	virtual MsvErrorCode Start() override;
 
 	/**************************************************************************************************//**
-	* @copydoc IMsvLogging::GetLoggerProvider(std::shared_ptr<IMsvLoggerProvider>& spLoggerProvider, const char* logFolder = "", const char* logFile = "msvlog.txt", int maxLogFileSize = 10485760, int maxLogFiles = 3) const
+	* @copydoc IMsvModule::Stop()
 	******************************************************************************************************/
-	virtual MsvErrorCode GetLoggerProvider(std::shared_ptr<IMsvLoggerProvider>& spLoggerProvider, const char* logFolder = "", const char* logFile = "msvlog.txt", int maxLogFileSize = 10485760, int maxLogFiles = 3) const override;
-
-	/**************************************************************************************************//**
-	* @copydoc IMsvLogging::SetLoggerProvider(std::shared_ptr<IMsvLoggerProvider> spLoggerProvider)
-	******************************************************************************************************/
-	virtual MsvErrorCode SetLoggerProvider(std::shared_ptr<IMsvLoggerProvider> spLoggerProvider) override;
-
-	/**************************************************************************************************//**
-	* @copydoc IMsvLogging::SetLogLevel(MsvLogLevel logLevel)
-	******************************************************************************************************/
-	virtual MsvErrorCode SetLogLevel(MsvLogLevel logLevel) override;
+	virtual MsvErrorCode Stop() override;
 
 protected:
 	/**************************************************************************************************//**
-	* @brief		Thread mutex.
-	* @details	Locks this object for thread safety access.
+	* @brief		Thread entry point.
+	* @details	This method will be called by @ref m_spUniqueWorker to execute task/job in interval.
+	* @see		m_spUniqueWorker
 	******************************************************************************************************/
-	mutable std::recursive_mutex m_lock;
+	void OnTask();
+
+protected:
+	/**************************************************************************************************//**
+	* @brief		Example module name.
+	* @details	Example module name used for logging.
+	******************************************************************************************************/
+	std::string m_moduleName;
 
 	/**************************************************************************************************//**
-	* @brief		Shared logger provider.
-	* @details	It is returned by @ref GetLoggerProvider.
+	* @brief		Example module logger name.
+	* @details	Example module logger name used for logging.
 	******************************************************************************************************/
-	mutable std::shared_ptr<IMsvLoggerProvider> m_spSharedLoggerProvider;
+	std::string m_moduleLoggerName;
+
+	/**************************************************************************************************//**
+	* @brief		Unique worker.
+	* @details	Thread which wil execute job of example module.
+	* @see		OnTask
+	******************************************************************************************************/
+	std::shared_ptr<IMsvUniqueWorker> m_spUniqueWorker;
 };
 
 
-#endif // !MARSTECH_LOGGING_SYS_H
+#endif // !MARSTECH_EXAMPLEMODULE_H
 
-/** @} */	//End of group MSYS.
+/** @} */	//End of group MSVEXAMPLE.

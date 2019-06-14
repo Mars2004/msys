@@ -5,8 +5,8 @@
 
 /**************************************************************************************************//**
 * @file
-* @brief			MarsTech Logging Implementation
-* @details		Contains implementation @ref MsvLogging of @ref IMsvLogging interface.
+* @brief			MarsTech Modules Implementation
+* @details		Contains implementation @ref MsvModules of @ref IMsvModules interface.
 * @author		Martin Svoboda
 * @date			05.05.2019
 * @copyright	GNU General Public License (GPLv3).
@@ -31,56 +31,51 @@ along with Foobar. If not, see <https://www.gnu.org/licenses/>.
 */
 
 
-#ifndef MARSTECH_LOGGING_SYS_H
-#define MARSTECH_LOGGING_SYS_H
+#ifndef MARSTECH_MODULES_H
+#define MARSTECH_MODULES_H
 
 
-#include "IMsvLogging.h"
+#include "IMsvModules.h"
 
 
 /**************************************************************************************************//**
-* @brief		MarsTech Logging Implementation.
-* @details	Implementation of logging interface for easy access to logging interfaces and its implementations.
-* @see		IMsvLogging
+* @brief		MarsTech Modules Implementation.
+* @details	Implementation of modules interface for easy access to modules interfaces and its implementations.
+* @see		IMsvModules
 ******************************************************************************************************/
-class MsvLogging:
-	public IMsvLogging
+class MsvModules:
+	public IMsvModules
 {
 public:
 	/**************************************************************************************************//**
 	* @brief		Constructor.
 	******************************************************************************************************/
-	MsvLogging();
+	MsvModules();
 
 	/**************************************************************************************************//**
 	* @brief		Virtual destructor.
 	******************************************************************************************************/
-	virtual ~MsvLogging();
+	virtual ~MsvModules();
 
 	/**************************************************************************************************//**
-	* @copydoc IMsvLogging::GetLogger(std::shared_ptr<MsvLogger>& spLogger, const char* loggerName) const
+	* @copydoc IMsvModules::GetDllModule(std::shared_ptr<IMsvModule>& spModule, const char* moduleId, std::shared_ptr<IMsvDllFactory> spDllFactory, std::shared_ptr<MsvLogger> spLogger = nullptr) const
 	******************************************************************************************************/
-	virtual MsvErrorCode GetLogger(std::shared_ptr<MsvLogger>& spLogger, const char* loggerName = "MsvLogger") const override;
+	virtual MsvErrorCode GetDllModule(std::shared_ptr<IMsvModule>& spModule, const char* moduleId, std::shared_ptr<IMsvDllFactory> spDllFactory, std::shared_ptr<MsvLogger> spLogger = nullptr) const override;
 
 	/**************************************************************************************************//**
-	* @copydoc IMsvLogging::GetLogger(std::shared_ptr<MsvLogger>& spLogger, const char* loggerName, const char* logFile, int maxLogFileSize, int maxLogFiles) const
+	* @copydoc IMsvModules::GetModuleConfigurator(std::shared_ptr<IMsvModuleConfigurator>& spModuleConfigurator, std::shared_ptr<IMsvActiveConfig> spActiveCfg, int32_t enabledCfgId, int32_t installedCfgId) const
 	******************************************************************************************************/
-	virtual MsvErrorCode GetLogger(std::shared_ptr<MsvLogger>& spLogger, const char* loggerName, const char* logFile, int maxLogFileSize, int maxLogFiles) const override;
+	virtual MsvErrorCode GetModuleConfigurator(std::shared_ptr<IMsvModuleConfigurator>& spModuleConfigurator, std::shared_ptr<IMsvActiveConfig> spActiveCfg, int32_t enabledCfgId, int32_t installedCfgId) const override;
 
 	/**************************************************************************************************//**
-	* @copydoc IMsvLogging::GetLoggerProvider(std::shared_ptr<IMsvLoggerProvider>& spLoggerProvider, const char* logFolder = "", const char* logFile = "msvlog.txt", int maxLogFileSize = 10485760, int maxLogFiles = 3) const
+	* @copydoc IMsvModules::GetModuleManager(std::shared_ptr<IMsvModuleManager>& spModuleManager, std::shared_ptr<MsvLogger> spLogger = nullptr) const
 	******************************************************************************************************/
-	virtual MsvErrorCode GetLoggerProvider(std::shared_ptr<IMsvLoggerProvider>& spLoggerProvider, const char* logFolder = "", const char* logFile = "msvlog.txt", int maxLogFileSize = 10485760, int maxLogFiles = 3) const override;
+	virtual MsvErrorCode GetModuleManager(std::shared_ptr<IMsvModuleManager>& spModuleManager, std::shared_ptr<MsvLogger> spLogger = nullptr) const override;
 
 	/**************************************************************************************************//**
-	* @copydoc IMsvLogging::SetLoggerProvider(std::shared_ptr<IMsvLoggerProvider> spLoggerProvider)
+	* @copydoc IMsvModules::GetSharedModuleManager(std::shared_ptr<IMsvModuleManager>& spModuleManager, std::shared_ptr<MsvLogger> spLogger = nullptr) const
 	******************************************************************************************************/
-	virtual MsvErrorCode SetLoggerProvider(std::shared_ptr<IMsvLoggerProvider> spLoggerProvider) override;
-
-	/**************************************************************************************************//**
-	* @copydoc IMsvLogging::SetLogLevel(MsvLogLevel logLevel)
-	******************************************************************************************************/
-	virtual MsvErrorCode SetLogLevel(MsvLogLevel logLevel) override;
+	virtual MsvErrorCode GetSharedModuleManager(std::shared_ptr<IMsvModuleManager>& spModuleManager, std::shared_ptr<MsvLogger> spLogger = nullptr) const override;
 
 protected:
 	/**************************************************************************************************//**
@@ -90,13 +85,13 @@ protected:
 	mutable std::recursive_mutex m_lock;
 
 	/**************************************************************************************************//**
-	* @brief		Shared logger provider.
-	* @details	It is returned by @ref GetLoggerProvider.
+	* @brief		Shared module manager.
+	* @details	It is returned by @ref GetSharedModuleManager.
 	******************************************************************************************************/
-	mutable std::shared_ptr<IMsvLoggerProvider> m_spSharedLoggerProvider;
+	mutable std::shared_ptr<IMsvModuleManager> m_spSharedModuleManager;
 };
 
 
-#endif // !MARSTECH_LOGGING_SYS_H
+#endif // !MARSTECH_MODULES_H
 
 /** @} */	//End of group MSYS.

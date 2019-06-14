@@ -64,7 +64,7 @@ MsvErrorCode MsvLogging::GetLogger(std::shared_ptr<MsvLogger>& spLogger, const c
 {
 	if (!m_spSharedLoggerProvider)
 	{
-		return MSV_NOT_INITIALIZED_ERROR;
+		return MSV_DOES_NOT_EXIST_ERROR;
 	}
 
 	spLogger = m_spSharedLoggerProvider->GetLogger(loggerName);
@@ -80,7 +80,7 @@ MsvErrorCode MsvLogging::GetLogger(std::shared_ptr<MsvLogger>& spLogger, const c
 {
 	if (!m_spSharedLoggerProvider)
 	{
-		return MSV_NOT_INITIALIZED_ERROR;
+		return MSV_DOES_NOT_EXIST_ERROR;
 	}
 
 	spLogger = m_spSharedLoggerProvider->GetLogger(loggerName, logFile, maxLogFileSize, maxLogFiles);
@@ -106,6 +106,37 @@ MsvErrorCode MsvLogging::GetLoggerProvider(std::shared_ptr<IMsvLoggerProvider>& 
 	}
 
 	spLoggerProvider = m_spSharedLoggerProvider;
+
+	return MSV_SUCCESS;
+}
+
+MsvErrorCode MsvLogging::SetLoggerProvider(std::shared_ptr<IMsvLoggerProvider> spLoggerProvider)
+{
+	std::lock_guard<std::recursive_mutex> lock(m_lock);
+
+	if (m_spSharedLoggerProvider)
+	{
+		return MSV_ALREADY_EXISTS_ERROR;
+	}
+
+	if (!spLoggerProvider)
+	{
+		return MSV_INVALID_DATA_ERROR;
+	}
+
+	m_spSharedLoggerProvider = spLoggerProvider;
+
+	return MSV_SUCCESS;
+}
+
+MsvErrorCode MsvLogging::SetLogLevel(MsvLogLevel logLevel)
+{
+	if (!m_spSharedLoggerProvider)
+	{
+		return MSV_DOES_NOT_EXIST_ERROR;
+	}
+
+	m_spSharedLoggerProvider->SetLogLevel(logLevel);
 
 	return MSV_SUCCESS;
 }

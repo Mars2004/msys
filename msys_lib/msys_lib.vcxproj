@@ -70,23 +70,23 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)\Build\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)\Build\Intermediate\$(Configuration)\$(ProjectName)\</IntDir>
+    <OutDir>$(SolutionDir)\Build\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)\Build\Intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
     <IncludePath>$(ProjectDir)\..\..;$(ProjectDir)\..\..\3rdParty;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)\Build\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)\Build\Intermediate\$(Configuration)\$(ProjectName)\</IntDir>
+    <OutDir>$(SolutionDir)\Build\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)\Build\Intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
     <IncludePath>$(ProjectDir)\..\..;$(ProjectDir)\..\..\3rdParty;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)\Build\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)\Build\Intermediate\$(Configuration)\$(ProjectName)\</IntDir>
+    <OutDir>$(SolutionDir)\Build\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)\Build\Intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
     <IncludePath>$(ProjectDir)\..\..;$(ProjectDir)\..\..\3rdParty;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)\Build\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)\Build\Intermediate\$(Configuration)\$(ProjectName)\</IntDir>
+    <OutDir>$(SolutionDir)\Build\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)\Build\Intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
     <IncludePath>$(ProjectDir)\..\..;$(ProjectDir)\..\..\3rdParty;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -138,6 +138,8 @@
     <ClInclude Include="..\configuration\MsvConfiguration.h" />
     <ClInclude Include="..\logging\IMsvLogging.h" />
     <ClInclude Include="..\logging\MsvLogging.h" />
+    <ClInclude Include="..\modules\IMsvModules.h" />
+    <ClInclude Include="..\modules\MsvModules.h" />
     <ClInclude Include="..\threading\IMsvThreading.h" />
     <ClInclude Include="..\threading\MsvThreading.h" />
     <ClInclude Include="IMsvSys.h" />
@@ -146,6 +148,7 @@
   <ItemGroup>
     <ClCompile Include="..\configuration\MsvConfiguration.cpp" />
     <ClCompile Include="..\logging\MsvLogging.cpp" />
+    <ClCompile Include="..\modules\MsvModules.cpp" />
     <ClCompile Include="..\threading\MsvThreading.cpp" />
     <ClCompile Include="MsvSys.cpp" />
   </ItemGroup>

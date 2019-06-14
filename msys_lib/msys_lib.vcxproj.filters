@@ -31,6 +31,12 @@
     <Filter Include="Source Files\logging">
       <UniqueIdentifier>{b4326090-958c-470c-bfb6-ef1ac81c18ce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\modules">
+      <UniqueIdentifier>{01474136-b0b1-4f45-944d-6f93139b4c3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\modules">
+      <UniqueIdentifier>{d5e28be0-c9cc-4ce2-b743-752392feb0cb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IMsvSys.h">
@@ -57,6 +63,12 @@
     <ClInclude Include="..\logging\MsvLogging.h">
       <Filter>Header Files\logging</Filter>
     </ClInclude>
+    <ClInclude Include="..\modules\IMsvModules.h">
+      <Filter>Header Files\modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\modules\MsvModules.h">
+      <Filter>Header Files\modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\threading\MsvThreading.cpp">
@@ -70,6 +82,9 @@
     </ClCompile>
     <ClCompile Include="..\logging\MsvLogging.cpp">
       <Filter>Source Files\logging</Filter>
+    </ClCompile>
+    <ClCompile Include="..\modules\MsvModules.cpp">
+      <Filter>Source Files\modules</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

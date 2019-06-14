@@ -1,0 +1,3 @@
+LIBRARY	msvexamplemodule
+EXPORTS
+	GetDllObject	@1

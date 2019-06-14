@@ -74,6 +74,11 @@ public:
 	virtual MsvErrorCode GetMsvLogging(std::shared_ptr<IMsvLogging>& spLogging) const override;
 
 	/**************************************************************************************************//**
+	* @copydoc IMsvSys::GetMsvModules(std::shared_ptr<IMsvModules>& spModules) const
+	******************************************************************************************************/
+	virtual MsvErrorCode GetMsvModules(std::shared_ptr<IMsvModules>& spModules) const override;
+
+	/**************************************************************************************************//**
 	* @copydoc IMsvSys::GetMsvThreading(std::shared_ptr<IMsvThreading>& spThreading) const
 	******************************************************************************************************/
 	virtual MsvErrorCode GetMsvThreading(std::shared_ptr<IMsvThreading>& spThreading) const override;
@@ -98,6 +103,13 @@ protected:
 	* @see		IMsvLogging
 	******************************************************************************************************/
 	mutable std::shared_ptr<IMsvLogging> m_spLogging;
+
+	/**************************************************************************************************//**
+	* @brief		Shared Modules.
+	* @details	It is returned by @ref GetMsvModules.
+	* @see		IMsvModules
+	******************************************************************************************************/
+	mutable std::shared_ptr<IMsvModules> m_spModules;
 
 	/**************************************************************************************************//**
 	* @brief		Shared Threading.

@@ -45,6 +45,7 @@ along with Foobar. If not, see <https://www.gnu.org/licenses/>.
 
 #include "msys/configuration/IMsvConfiguration.h"
 #include "msys/logging/IMsvLogging.h"
+#include "msys/modules/IMsvModules.h"
 #include "msys/threading/IMsvThreading.h"
 
 MSV_DISABLE_ALL_WARNINGS
@@ -77,14 +78,14 @@ public:
 	* @brief			Get configuration interface.
 	* @details		Returns configuration interface with get methods for active and passive configurations.
 	*					Each call of this method returns same interface (same shared pointer).
-	* @param[out]	spConfiguration		Shared pointer to configuration interface @ref IMsvConfiguration.
+	* @param[out]	spConfiguration				Shared pointer to configuration interface @ref IMsvConfiguration.
 	* @retval		MSV_ALLOCATION_ERROR			When memory allocation failed.
 	* @retval		MSV_SUCCESS						On success.
 	* @note			When @ref IMsvSys is singleton, configuration interface is singleton too.
 	* @see			IMsvConfiguration
 	******************************************************************************************************/
 	virtual MsvErrorCode GetMsvConfiguration(std::shared_ptr<IMsvConfiguration>& spConfiguration) const = 0;
-
+	
 	/**************************************************************************************************//**
 	* @brief			Get logging interface.
 	* @details		Returns logging interface with get methods for logger and logger provider.
@@ -96,6 +97,18 @@ public:
 	* @see			IMsvLogging
 	******************************************************************************************************/
 	virtual MsvErrorCode GetMsvLogging(std::shared_ptr<IMsvLogging>& spLogging) const = 0;
+
+	/**************************************************************************************************//**
+	* @brief			Get modules interface.
+	* @details		Returns modules interface with get methods for modules and module manager.
+	*					Each call of this method returns same interface (same shared pointer).
+	* @param[out]	spModules						Shared pointer to configuration interface @ref IMsvConfiguration.
+	* @retval		MSV_ALLOCATION_ERROR			When memory allocation failed.
+	* @retval		MSV_SUCCESS						On success.
+	* @note			When @ref IMsvSys is singleton, modules interface is singleton too.
+	* @see			IMsvModules
+	******************************************************************************************************/
+	virtual MsvErrorCode GetMsvModules(std::shared_ptr<IMsvModules>& spModules) const = 0;
 
 	/**************************************************************************************************//**
 	* @brief			Get threading interface.

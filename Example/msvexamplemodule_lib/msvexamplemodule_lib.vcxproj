@@ -20,32 +20,32 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{49045281-86BB-41F0-A74D-ED7C9F108D30}</ProjectGuid>
-    <RootNamespace>msys</RootNamespace>
+    <ProjectGuid>{1538B78C-2868-4D97-83D7-27DBDD7BADDF}</ProjectGuid>
+    <RootNamespace>msvexamplemodulelib</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -72,22 +72,22 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)\Build\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)\Build\Intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
-    <IncludePath>$(ProjectDir)\..\..;$(ProjectDir)\..\..\3rdParty;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(ProjectDir)\..\..\..;$(ProjectDir)\..\..\..\3rdParty;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)\Build\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)\Build\Intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
-    <IncludePath>$(ProjectDir)\..\..;$(ProjectDir)\..\..\3rdParty;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(ProjectDir)\..\..\..;$(ProjectDir)\..\..\..\3rdParty;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)\Build\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)\Build\Intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
-    <IncludePath>$(ProjectDir)\..\..;$(ProjectDir)\..\..\3rdParty;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(ProjectDir)\..\..\..;$(ProjectDir)\..\..\..\3rdParty;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)\Build\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)\Build\Intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
-    <IncludePath>$(ProjectDir)\..\..;$(ProjectDir)\..\..\3rdParty;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(ProjectDir)\..\..\..;$(ProjectDir)\..\..\..\3rdParty;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -96,9 +96,6 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
-    <Link>
-      <ModuleDefinitionFile>msys.def</ModuleDefinitionFile>
-    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -107,9 +104,6 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
-    <Link>
-      <ModuleDefinitionFile>msys.def</ModuleDefinitionFile>
-    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -123,7 +117,6 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <ModuleDefinitionFile>msys.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -138,31 +131,13 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <ModuleDefinitionFile>msys.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
+    <ClInclude Include="MsvExampleModule.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="msys.def" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\mconfig\mconfig\mconfig.vcxproj">
-      <Project>{42b50cef-dc26-429f-91c8-ff640c2bfb54}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\mmodule\mmodule.vcxproj">
-      <Project>{c1ddb80c-e5bc-4f7a-b35f-299f6c2eb844}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\mthreading\mthreading.vcxproj">
-      <Project>{ebedf666-a766-4ea1-b5aa-3fe6505d42bc}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\msys_lib\msys_lib.vcxproj">
-      <Project>{e7bf311b-c590-4311-948a-109e6eb1cdb3}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="MsvSysDll_Interface.h" />
+    <ClCompile Include="MsvExampleModule.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

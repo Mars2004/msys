@@ -5,8 +5,8 @@
 
 /**************************************************************************************************//**
 * @file
-* @brief			MarsTech SYS Implementation
-* @details		Contains implementation of @ref MsvSys.
+* @brief			MarsTech Modules Implementation
+* @details		Contains implementation of @ref MsvModules.
 * @author		Martin Svoboda
 * @date			05.05.2019
 * @copyright	GNU General Public License (GPLv3).
@@ -31,11 +31,11 @@ along with Foobar. If not, see <https://www.gnu.org/licenses/>.
 */
 
 
-#include "MsvSys.h"
-#include "msys/configuration/MsvConfiguration.h"
-#include "msys/logging/MsvLogging.h"
-#include "msys/modules/MsvModules.h"
-#include "msys/threading/MsvThreading.h"
+#include "MsvModules.h"
+
+#include "mmodule/MsvModuleManager.h"
+#include "mmodule/MsvDllModuleAdapter.h"
+#include "mmodule/MsvModuleConfigurator.h"
 
 #include "merror/MsvErrorCodes.h"
 
@@ -45,91 +45,92 @@ along with Foobar. If not, see <https://www.gnu.org/licenses/>.
 ********************************************************************************************************************************/
 
 
-MsvSys::MsvSys()
+MsvModules::MsvModules()
 {
 
 }
 
 
-MsvSys::~MsvSys()
+MsvModules::~MsvModules()
 {
-
+	
 }
 
 
 /********************************************************************************************************************************
-*															IMsvSys public methods
+*															IMsvModules public methods
 ********************************************************************************************************************************/
 
 
-MsvErrorCode MsvSys::GetMsvConfiguration(std::shared_ptr<IMsvConfiguration>& spConfiguration) const
+MsvErrorCode MsvModules::GetDllModule(std::shared_ptr<IMsvModule>& spModule, const char* moduleId, std::shared_ptr<IMsvDllFactory> spDllFactory, std::shared_ptr<MsvLogger> spLogger) const
 {
 	std::lock_guard<std::recursive_mutex> lock(m_lock);
 
-	if (!m_spConfiguration)
+	if (!spDllFactory)
 	{
-		m_spConfiguration.reset(new (std::nothrow) MsvConfiguration());
-		if (!m_spConfiguration)
-		{
-			return MSV_ALLOCATION_ERROR;
-		}
+		return MSV_INVALID_DATA_ERROR;
 	}
 
-	spConfiguration = m_spConfiguration;
+	std::shared_ptr<IMsvModule> spTempModule(new (std::nothrow) MsvDllModuleAdapter(moduleId, spDllFactory, spLogger));
+
+	if (!spTempModule)
+	{
+		return MSV_ALLOCATION_ERROR;
+	}
+
+	spModule = spTempModule;
 
 	return MSV_SUCCESS;
 }
 
-MsvErrorCode MsvSys::GetMsvLogging(std::shared_ptr<IMsvLogging>& spLogging) const
+MsvErrorCode MsvModules::GetModuleConfigurator(std::shared_ptr<IMsvModuleConfigurator>& spModuleConfigurator, std::shared_ptr<IMsvActiveConfig> spActiveCfg, int32_t enabledCfgId, int32_t installedCfgId) const
 {
 	std::lock_guard<std::recursive_mutex> lock(m_lock);
 
-	if (!m_spLogging)
+	if (!spActiveCfg)
 	{
-		m_spLogging.reset(new (std::nothrow) MsvLogging());
-		if (!m_spLogging)
-		{
-			return MSV_ALLOCATION_ERROR;
-		}
+		return MSV_INVALID_DATA_ERROR;
 	}
 
-	spLogging = m_spLogging;
+	std::shared_ptr<IMsvModuleConfigurator> spTempModuleConfigurator(new (std::nothrow) MsvModuleConfigurator(spActiveCfg, enabledCfgId, installedCfgId));
+
+	if (!spTempModuleConfigurator)
+	{
+		return MSV_ALLOCATION_ERROR;
+	}
+
+	spModuleConfigurator = spTempModuleConfigurator;
 
 	return MSV_SUCCESS;
 }
 
-MsvErrorCode MsvSys::GetMsvModules(std::shared_ptr<IMsvModules>& spModules) const
+MsvErrorCode MsvModules::GetModuleManager(std::shared_ptr<IMsvModuleManager>& spModuleManager, std::shared_ptr<MsvLogger> spLogger) const
 {
 	std::lock_guard<std::recursive_mutex> lock(m_lock);
 
-	if (!m_spModules)
+	std::shared_ptr<IMsvModuleManager> spTempModuleManager(new (std::nothrow) MsvModuleManager(spLogger));
+
+	if (!spTempModuleManager)
 	{
-		m_spModules.reset(new (std::nothrow) MsvModules());
-		if (!m_spModules)
-		{
-			return MSV_ALLOCATION_ERROR;
-		}
+		return MSV_ALLOCATION_ERROR;
 	}
 
-	spModules = m_spModules;
+	spModuleManager = spTempModuleManager;
 
 	return MSV_SUCCESS;
 }
 
-MsvErrorCode MsvSys::GetMsvThreading(std::shared_ptr<IMsvThreading>& spThreading) const
+MsvErrorCode MsvModules::GetSharedModuleManager(std::shared_ptr<IMsvModuleManager>& spModuleManager, std::shared_ptr<MsvLogger> spLogger) const
 {
 	std::lock_guard<std::recursive_mutex> lock(m_lock);
 
-	if (!m_spThreading)
+	if (!m_spSharedModuleManager)
 	{
-		m_spThreading.reset(new (std::nothrow) MsvThreading());
-		if (!m_spThreading)
-		{
-			return MSV_ALLOCATION_ERROR;
-		}
+		//if GetModuleManager fails it does not set out shared pointer -> m_spSharedModuleManager is unset when failed
+		MSV_RETURN_FAILED(GetModuleManager(m_spSharedModuleManager, spLogger));
 	}
 
-	spThreading = m_spThreading;
+	spModuleManager = m_spSharedModuleManager;
 
 	return MSV_SUCCESS;
 }

@@ -1,14 +1,14 @@
 /**************************************************************************************************//**
-* @addtogroup	MSYS
+* @addtogroup	MSVEXAMPLE
 * @{
 ******************************************************************************************************/
 
 /**************************************************************************************************//**
 * @file
-* @brief			MarsTech DLL main
-* @details		DLL main of MarsTech C++ SYS library. Contains implementation of exported @ref GetDllObject function.
+* @brief			MarsTech Example Module DLL main
+* @details		DLL main of MarsTech C++ SYS Example Module. Contains implementation of exported @ref GetDllObject function.
 * @author		Martin Svoboda
-* @date			05.05.2019
+* @date			26.05.2019
 * @copyright	GNU General Public License (GPLv3).
 ******************************************************************************************************/
 
@@ -31,11 +31,10 @@ along with Foobar. If not, see <https://www.gnu.org/licenses/>.
 */
 
 
-#include "MsvSysDll_Interface.h"
-#include "msys/msys_lib/MsvSys.h"
-#include "mdllfactory/MsvDllMainHelper.h"
+#include "MsvExampleModuleDll_Interface.h"
+#include "msys/Example/msvexamplemodule_lib/MsvExampleModule.h"
 
-#include "merror/MsvErrorCodes.h"
+#include "mdllfactory/MsvDllMainHelper.H"
 
 
 /**************************************************************************************************//**
@@ -43,13 +42,6 @@ along with Foobar. If not, see <https://www.gnu.org/licenses/>.
 * @details	Locks this DLL (its @ref GetDllObject function) for thread safety access.
 ******************************************************************************************************/
 std::recursive_mutex g_lock;
-
-/**************************************************************************************************//**
-* @brief		Shared @ref IMsvSys.
-* @details	Shared interface @ref IMsvSys. It is std::weak_ptr, so returns shared object until someone
-*				holds in a std::shared_ptr.
-******************************************************************************************************/
-std::weak_ptr<IMsvDllObject> g_spSys;
 
 
 /**************************************************************************************************//**
@@ -79,11 +71,12 @@ extern "C" MsvErrorCode GetDllObject(const char* id, std::shared_ptr<IMsvDllObje
 	std::string idString(id);
 
 	//create and return DLL object when known id was used
-	MSV_GETWEAKSHARED_DLLOBJECT_WITH_ID(idString, MSV_SYS_OBJECT_ID, MsvSys(), g_spSys, spDllObject);
+	MSV_GET_DLLOBJECT_WITH_ID(idString, MSV_EXAMPLEMODULE1_OBJECT_ID, MsvExampleModule("MsvDllExampleModule_1", "DllModule_1"), spDllObject);
+	MSV_GET_DLLOBJECT_WITH_ID(idString, MSV_EXAMPLEMODULE2_OBJECT_ID, MsvExampleModule("MsvDllExampleModule_2", "DllModule_2"), spDllObject);
 
 	//uknown id (not found) -> error
 	return MSV_NOT_FOUND_ERROR;
 }
 
 
-/** @} */	//End of group MSYS.
+/** @} */	//End of group MSVEXAMPLE.
