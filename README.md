@@ -8,7 +8,7 @@
 Work In Progress.
 
 ## Installation
-TODO
+Download all [MarsTech](https://github.com/Mars2004) dependencies and put them to a same directory. Create a new subdirectory "3rdParty" and put there "3rdParty" dependencies ([inih](https://github.com/jtilly/inih), [SQLite3](https://www.sqlite.org/index.html), [spdlog](https://github.com/gabime/spdlog)).
 
 ### Dependencies
 
@@ -20,6 +20,7 @@ TODO
  - [MarsTech Threading](https://github.com/Mars2004/mthreading)
  - [MarsTech Dll Factory](https://github.com/Mars2004/mdllfactory)
  - [MarsTech Module](https://github.com/Mars2004/mmodule)
+ - [spdlog](https://github.com/gabime/spdlog)
  - [inih](https://github.com/jtilly/inih)
  - [SQLite3](https://www.sqlite.org/index.html)
 
@@ -27,9 +28,9 @@ TODO
 TODO
 
 ## Usage Example
-There is also an [usage example](https://github.com/Mars2004/msys/Example) which uses the most of [MarsTech](https://github.com/Mars2004) projects and libraries.
+There is also an [usage example](https://github.com/Mars2004/msys/tree/master/Example) which uses the most of [MarsTech](https://github.com/Mars2004) projects and libraries.
 Its source codes and readme can be found at:
- - [https://github.com/Mars2004/msys/Example](https://github.com/Mars2004/msys/Example)
+ - [https://github.com/Mars2004/msys/tree/master/Example](https://github.com/Mars2004/msys/tree/master/Example)
 
 ## Source Code Documentation
 You can find generated source code documentation at [https://www.marstech.cz/projects/msys/1.0.1/doc](https://www.marstech.cz/projects/msys/1.0.1/doc).
